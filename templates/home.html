@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WATHousing</title>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+     </style>
+
+     <!-- Link to Google Map API -->
+     <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
+     <!-- Import Google map with formatting -->
+     <script src="{{ url_for('static', filename='map_import.js') }}" defer></script>
+     <!-- Add Markers -->
+     <script src="{{ url_for('static', filename='marker.js') }}" defer></script>
+</head>
+<body>
+        <div id="map"></div>
+</body>
+</html>
