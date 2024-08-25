@@ -1,2 +1,4 @@
 Flask
 gunicorn
+sqlite3
+datetime
