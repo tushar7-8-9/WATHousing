@@ -18,7 +18,7 @@ def get_marker_location(db, conn, cur):
          for building in locations: main_dict[building[0]] = {"lat": building[1], "lng": building[2] }
          return main_dict
 
- def get_unique_names(db, conn, cur):
+def get_unique_names(db, conn, cur):
      cur.execute(
          '''
          SELECT DISTINCT(building_name) FROM building_location
@@ -27,7 +27,7 @@ def get_marker_location(db, conn, cur):
      names = cur.fetchall()
      return [name[0] for name in names]
 
- def data_fetcher_lease(db, conn, cur, year, building, main_dict):
+def data_fetcher_lease(db, conn, cur, year, building, main_dict):
          col_names = ["lease_price_unit","lease_price_room"] #col_names for the data table from where pull is taking place
          key_name= ["leasePriceUnit", "leasePriceRoom"]
          table_names = ["housing_data_unit", "housing_data_room"]
@@ -41,7 +41,7 @@ def get_marker_location(db, conn, cur):
                  else: price = "Data Not Available"
                  main_dict[building][str(year)][key_name[index]] = price
 
- def data_fetcher_general(db, conn, cur, building, main_dict):
+def data_fetcher_general(db, conn, cur, building, main_dict):
      table_names = ["housing_data_unit", "housing_data_room"]
      avg_rating, counter = 0, 0
      for name in table_names:
@@ -57,7 +57,7 @@ def get_marker_location(db, conn, cur):
      address = cur.fetchall()[0][0]
      main_dict[building]['address'] = address
 
- def data_fetcher_sublet(db, conn, cur, year, building, main_dict):
+def data_fetcher_sublet(db, conn, cur, year, building, main_dict):
        terms = ["spring", "winter", "fall"]
        col_names = ["sublet_price_unit", "sublet_price_room"]
        table_names = ["housing_data_unit", "housing_data_room"]
@@ -74,7 +74,7 @@ def get_marker_location(db, conn, cur):
                  sub_dict[term] = price
          main_dict[building][str(year)][key_name[index]] = sub_dict
 
- def get_marker_info(db, conn, cur, base_year, current_year, markers):
+def get_marker_info(db, conn, cur, base_year, current_year, markers):
      main_dict = {}
      for building in markers:
              main_dict[building] = {}
@@ -84,7 +84,7 @@ def get_marker_location(db, conn, cur):
                    data_fetcher_sublet(db, conn, cur, year, building, main_dict)
      return main_dict
 
- def create_var(db, conn, cur):
+def create_var(db, conn, cur):
      markers = get_unique_names(db, conn, cur)
      marker_location = get_marker_location(db, conn, cur)
      base_year = 2021
@@ -93,7 +93,7 @@ def get_marker_location(db, conn, cur):
      marker_info = get_marker_info(db, conn, cur, base_year, current_year, markers)
      return markers, marker_location, current_year, years, marker_info
 
- def controller():
+def controller():
      db = "rent_data.db"
      conn = sqlite3.connect(db)
      cur = conn.cursor()
