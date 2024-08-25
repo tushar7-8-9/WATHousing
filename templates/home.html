@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>WATHousing</title>
+    <link rel="icon" href="static/logo.png" type="image/png">
     <style>
         #map {
             height: 100%;
@@ -14,14 +15,557 @@
         }
      </style>
 
-     <!-- Link to Google Map API -->
-     <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="static/marker_style2.css">
+    <link rel="stylesheet" href="static/marker_style.css">
+
+
+
+    <!-- Link to Google Map API -->
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGur8bFOiGEq_aT25bYex1qvoYeDSPxjo&callback=initMap" async defer></script>
      <!-- Import Google map with formatting -->
-     <script src="{{ url_for('static', filename='map_import.js') }}" defer></script>
-     <!-- Add Markers -->
-     <script src="{{ url_for('static', filename='marker.js') }}" defer></script>
+     <script>
+            function initMap() {
+                        var centerPoint = { lat: 43.4723, lng: -80.5449 }; // University of Waterloo coordinates
+                        var mapOptions = {
+                            center: centerPoint,
+                            zoom: 15, // Adjust zoom level to fit the desired area
+                            styles: [
+                                {
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#212121"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elementType": "labels.icon",
+                                    "stylers": [
+                                        {
+                                            "visibility": "off"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#757575"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elementType": "labels.text.stroke",
+                                    "stylers": [
+                                        {
+                                            "color": "#212121"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "administrative",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#757575"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "administrative.country",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#9e9e9e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "administrative.land_parcel",
+                                    "stylers": [
+                                        {
+                                            "visibility": "off"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "administrative.locality",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#bdbdbd"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#757575"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi.park",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#181818"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi.park",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#616161"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi.park",
+                                    "elementType": "labels.text.stroke",
+                                    "stylers": [
+                                        {
+                                            "color": "#1b1b1b"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road",
+                                    "elementType": "geometry.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#2c2c2c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff" //"#8a8a8a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road.arterial",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#373737"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road.highway",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#3c3c3c"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road.highway.controlled_access",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#4e4e4e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "road.local",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff" //"#616161"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "transit",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#757575"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "water",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#00aaff" // Blue color for the water
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "water",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"  //"#000000"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "landscape",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                        {
+                                            "color": "#66bb66" // Green color for the grass
+                                        }
+                                    ]
+                                },
+                                // buildings 
+                                {
+                                    "featureType": "poi.business",
+                                    "elementType": "geometry",
+                                    "stylers": [
+                                    {
+                                        "visibility": "on"
+                                    },
+                                    {
+                                        "color": "#757575"
+                                    }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi.business",
+                                    "elementType": "labels.text.fill",
+                                    "stylers": [
+                                        {
+                                            "color": "#ffffff"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "featureType": "poi.business",
+                                    "elementType": "labels.text.stroke",
+                                    "stylers": [
+                                        {
+                                            "color": "#000000"
+                                        }
+                                    ]
+                                }  
+                            ]
+                        };
+                        map = new google.maps.Map(document.getElementById('map'), mapOptions); 
+                            
+                        // Draw a circle with a 500-meter radius around the central point
+                        /*
+                        var circle = new google.maps.Circle({
+                                    map: map,
+                                    center: centerPoint,
+                                    radius: 1000, // Radius in meters
+                                    fillColor: '#AA0000',
+                                    fillOpacity: 0.2,
+                                    strokeColor: '#AA0000',
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 2
+                                });
+                        */
+                        set_markers();
+                    }
+
+                    function set_markers() {
+                                var markers = JSON.parse('{{markers2|tojson}}');
+                                var marker_location = JSON.parse('{{marker_location2|tojson}}')
+                                var marker_info = JSON.parse('{{marker_info2|tojson}}')
+
+                                
+
+                                for (let i = 0; i < markers.length; i++) {
+                                    let markerName = markers[i];
+                                    let currentYear = '{{current_year2}}';
+                                    let info = marker_info[markerName][currentYear];
+                                    let address = marker_info[markerName]['address'];
+                                    let avg_rating = marker_info[markerName]['rating'];
+
+                                    var marker = new google.maps.Marker({
+                                        position: marker_location[markerName],
+                                        map: map,
+                                        title: markerName,
+                                        icon: {
+                                            url: 'http://127.0.0.1:5000/static/marker_icon.png',
+                                            scaledSize: new google.maps.Size(40, 40),
+                                        }
+                                    });
+
+                                    var infoContent = `
+                                        <style>
+                                            /* Apply your desired background color to the entire InfoWindow */
+                                            .gm-style-iw {
+                                                background-color: #212121 !important;
+                                                padding: 0 !important;
+                                                margin: 0 !important;
+                                                box-shadow: none !important;
+                                                border-radius: 5px; /* Optional: add rounded corners */
+                                            }
+
+                                            /* Hide the default close button */
+                                            .gm-style-iw-t::after {
+                                                background: none !important;
+                                                box-shadow: none !important;
+                                            }
+
+                                            /* Adjust the content wrapper of the InfoWindow */
+                                            .gm-style-iw-d {
+                                                overflow: hidden !important;
+                                                padding: 0 !important;
+                                                margin: 0 !important;
+                                                background-color: #212121 !important;
+                                            }
+
+                                            /* Optional: customize the close button */
+                                            .gm-ui-hover-effect {
+                                                display: none; /* Hide the close button */
+                                            }
+                                        </style>
+                                        <div class="popup-container" style="width: 360px; background-color: #212121;">
+                                            <button id="returnButton" class="return-button" style="display:none;"><</button>
+                                            <div id="heading_container">
+                                                <h1 id="infoHeading" class="popup-heading">${markerName}</h1>
+                                            </div>
+                                            <div id="initialButtons" class="popup-button-group" style="width: 50%; margin: 0 auto;">
+                                                <button id="toggleButton" class="popup-button">Lease</button>
+                                                <button id="toggleButtonSublet" class="popup-button">Sublet</button>
+                                            </div>
+                                            <div id="yearDropdown" class="popup-dropdown" style="display:none;">
+                                                <select id="yearSelect" class="year-select">
+                                                    <option value="2024">2024</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2021">2021</option>
+                                                </select>
+                                            </div>
+                                            <div id="termDropdown" class="popup-dropdown" style="display:none;">
+                                                <select id="termSelect" class="term-select">
+                                                    <option value="spring">Spring</option>
+                                                    <option value="winter">Winter</option>
+                                                    <option value="fall">Fall</option>
+                                                </select>
+                                            </div>
+                                            <div id="perRoomUnitButtons" class="popup-button-group" style="display:none;">
+                                                <button id="perRoomButton" class="popup-button">Per Room</button>
+                                                <button id="perUnitButton" class="popup-button">Per Unit</button>
+                                            </div>
+                                            <div id="additional-info" class="popup-info">
+                                                <p id="main_pop_data"> <span class="label">Rating</span> <span class="data">${avg_rating}</span></p>
+                                                <p id="main_pop_data"> <span class="label">Address</span> <span class="data">${address}</span></p>
+                                            </div>
+                                            <div class="price_info">
+                                                <p id="price-info" class="popup-price-info" style="display:none;"></p>
+                                            </div>
+                                        </div>
+                                    `;
+
+                                    var infoWindow = new google.maps.InfoWindow({
+                                        content: infoContent
+                                    });
+
+                                    google.maps.event.addListener(marker, 'click', (function(marker, infoWindow) {
+                                        return function() {
+                                            infoWindow.open(map, marker);
+
+                                            google.maps.event.addListenerOnce(infoWindow, 'domready', function() {
+                                                var returnButton = document.getElementById("returnButton");
+                                                var toggleButton = document.getElementById("toggleButton");
+                                                var toggleButtonSublet = document.getElementById("toggleButtonSublet");
+                                                var perRoomButton = document.getElementById("perRoomButton");
+                                                var perUnitButton = document.getElementById("perUnitButton");
+                                                var additionalInfo = document.getElementById("additional-info");
+                                                var priceInfo = document.getElementById("price-info");
+                                                var yearDropdown = document.getElementById("yearDropdown");
+                                                var yearSelect = document.getElementById("yearSelect");
+                                                var termDropdown = document.getElementById("termDropdown");
+                                                var termSelect = document.getElementById("termSelect");
+                                                var perRoomUnitButtons = document.getElementById("perRoomUnitButtons");
+                                                var initialButtons = document.getElementById("initialButtons");
+                                                var infoHeading = document.getElementById("infoHeading");
+
+                                                function updatePrice() {
+                                                    let selectedYear = yearSelect.value;
+                                                    let selectedTerm = termSelect.value;
+                                                    let info = marker_info[markerName][selectedYear];
+                                                    let priceText = '';
+                                                
+                                                    if (toggleButton.classList.contains('active')) {
+                                                        if (perRoomButton.classList.contains('active')) {
+                                                            priceText = `
+                                                                <span class="price_label">Estimated Lease Price </span> 
+                                                                <span class="data_label">${info.leasePriceRoom}</span>`;
+                                                        } else {
+                                                            priceText = `
+                                                                <span class="price_label">Estimated Lease Price </span> 
+                                                                <span class="data_label">${info.leasePriceUnit}</span>`;
+                                                        }
+                                                    } else if (toggleButtonSublet.classList.contains('active')) {
+                                                        if (perRoomButton.classList.contains('active')) {
+                                                            priceText = `
+                                                                <span class="price_label">Estimated Sublet Price </span> 
+                                                                <span class="data_label">${info.subletPriceRoom[selectedTerm]}</span>`;
+                                                        } else {
+                                                            priceText = `
+                                                                <span class="price_label">Estimated Sublet Price </span> 
+                                                                <span class="data_label">${info.subletPriceUnit[selectedTerm]}</span>`;
+                                                        }
+                                                    }
+                                                
+                                                    priceInfo.innerHTML = priceText;
+                                                }
+                                                
+
+                                                yearSelect.addEventListener('change', function() {
+                                                    updatePrice();
+                                                });
+
+                                                termSelect.addEventListener('change', function() {
+                                                    updatePrice();
+                                                });
+
+                                                toggleButton.addEventListener('click', function() {
+                                                    initialButtons.style.display = "none";
+                                                    yearDropdown.style.display = "block";
+                                                    termDropdown.style.display = "none";
+                                                    toggleButton.classList.add('active');
+                                                    toggleButtonSublet.classList.remove('active');
+                                                    additionalInfo.style.display = "none";
+                                                    priceInfo.style.display = "block";
+                                                    perRoomUnitButtons.style.display = "block";
+                                                    perRoomButton.classList.add('active');
+                                                    perUnitButton.classList.remove('active');
+                                                    infoHeading.innerHTML = markerName + (" Lease Info");
+                                                    updatePrice();
+                                                    returnButton.style.display = "block";
+                                                });
+
+                                                toggleButtonSublet.addEventListener('click', function() {
+                                                    initialButtons.style.display = "none";
+                                                    yearDropdown.style.display = "block";
+                                                    termDropdown.style.display = "block";
+                                                    toggleButtonSublet.classList.add('active');
+                                                    toggleButton.classList.remove('active');
+                                                    additionalInfo.style.display = "none";
+                                                    priceInfo.style.display = "block";
+                                                    perRoomUnitButtons.style.display = "block";
+                                                    perRoomButton.classList.add('active');
+                                                    perUnitButton.classList.remove('active');
+                                                    infoHeading.innerHTML = markerName;
+                                                    updatePrice();
+                                                    returnButton.style.display = "block";
+                                                });
+
+                                                perRoomButton.addEventListener('click', function() {
+                                                    perRoomButton.classList.add('active');
+                                                    perUnitButton.classList.remove('active');
+                                                    updatePrice();
+                                                });
+
+                                                perUnitButton.addEventListener('click', function() {
+                                                    perUnitButton.classList.add('active');
+                                                    perRoomButton.classList.remove('active');
+                                                    updatePrice();
+                                                });
+
+                                                returnButton.addEventListener('click', function() {
+                                                    initialButtons.style.display = "block";
+                                                    yearDropdown.style.display = "none";
+                                                    termDropdown.style.display = "none";
+                                                    toggleButton.classList.remove('active');
+                                                    toggleButtonSublet.classList.remove('active');
+                                                    additionalInfo.style.display = "block";
+                                                    priceInfo.style.display = "none";
+                                                    perRoomUnitButtons.style.display = "none";
+                                                    infoHeading.innerHTML = markerName;
+                                                    returnButton.style.display = "none";
+                                                });
+                                            });
+                                        }
+                                    })(marker, infoWindow));
+                                }
+                            }
+
+
+
+     </script>
 </head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <body>
+        <div class="info-button-container">
+            <div class="info-button">i
+                <div class="about_us">
+                    <h2 class="info_header">About Us</h2>
+                    <p class="info_body">WATHousing is a student-led initiative 
+                        at the University of Waterloo, in early stages of developement, designed to make housing
+                        information more accessible to the student community. Recognizing the challenges 
+                        students face in finding reliable and comprehensive housing data, WATHousing aims to 
+                        centralize and streamline this information, making it easier for students to make informed 
+                        decisions about where to live.<br><br>
+                        
+                        As a work-in-progress, the website is constantly evolving, with new features and updates being 
+                        added regularly. Whether you're looking for a short-term sublet, 
+                        a long-term rental, or information on landlord policies, WATHousing strives to be the go-to 
+                        resource for all your housing needs at the University of Waterloo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="search_bar_container">
+            <div class="search_bar">Click to Search.
+                <div class="search_bar_prompt"> This feature is not currently active.
+                </div>
+            </div>
+        </div>
+
         <div id="map"></div>
 </body>
 </html>
