@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 import sqlite3, datetime
 
 app = Flask(__name__)
